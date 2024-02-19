@@ -11,6 +11,11 @@ const PRIORITIES = {
   HIGH: 'high',
 };
 
+const VALUE_NAMES = {
+  STATUS: 'status',
+  PRIORITY: 'priority',
+}
+
 const list = [
   {
     id: 1,
@@ -72,6 +77,29 @@ function deleteTask(task) {
   }
 }
 
+function showListBy(byValueName) {
+  const variousMeetsToValue = [];
+
+  list.forEach((task) => {
+    const isValueNameNotRepeats = !variousMeetsToValue.includes(task[byValueName]);
+
+    if (isValueNameNotRepeats) {
+      variousMeetsToValue.push(task[byValueName]);
+    };
+  });
+
+  variousMeetsToValue.forEach((value) => {
+    console.log(
+      `${value}:\n${list.map((task) => {
+        if (task[byValueName] === value) {
+          return `\t${task.name},\n`;
+        }
+      }).join('')}`
+    );
+  });
+}
+
+
 
 console.log(list)
 changeStatus('test', STATUSES.TODO);
@@ -80,3 +108,4 @@ addTask('not letting Nastya going down', PRIORITIES.HIGH);
 console.log(list)
 deleteTask('test');
 console.log(list);
+showListBy(VALUE_NAMES.PRIORITY)
